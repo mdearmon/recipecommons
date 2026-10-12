@@ -1,0 +1,1 @@
+ALTER TABLE `import_receipts` ADD `fingerprint` text;

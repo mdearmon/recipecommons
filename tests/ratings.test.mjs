@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {summarizeRatings,countCollectors,validStars,compareHighestRated} from '../lib/ratings.ts';
+test('ratings are 1–5 integer stars',()=>{for(const x of [1,2,3,4,5])assert.ok(validStars(x));for(const x of [0,6,2.5,'5',null])assert.equal(validStars(x),false)});
+test('averages exclude contributor and removed ratings',()=>assert.deepEqual(summarizeRatings([{user:'owner',score:5,revision:1,fingerprint:'a',removed:0},{user:'a',score:4,revision:1,fingerprint:'a',removed:0},{user:'b',score:2,revision:1,fingerprint:'a',removed:0},{user:'c',score:1,revision:1,fingerprint:'a',removed:1}],'owner','a'),{average:3,count:2,updatedSinceRatings:false}));
+test('minor ingredient updates retain score and display update notice',()=>assert.deepEqual(summarizeRatings([{user:'a',score:5,revision:1,fingerprint:'old',removed:0}],'owner','new'),{average:5,count:1,updatedSinceRatings:true}));
+test('no fabricated score for unrated recipes',()=>assert.equal(summarizeRatings([],'owner','a').average,null));
+test('saved count measures distinct collectors excluding creator',()=>assert.equal(countCollectors(['owner','a','a','b'],'owner'),2));
+test('ranked recipes need five ratings; small samples follow',()=>{assert.ok(compareHighestRated({average:4,count:5},{average:5,count:1})<0);assert.ok(compareHighestRated({average:4,count:5},{average:4.5,count:6})>0)});
