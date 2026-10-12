@@ -10,3 +10,6 @@ test('checks entity-encoded links',()=>assert.ok(sourceLinkErrors('https&#58;&#4
 test('recognizes both a YouTube source and its attributed linked recipe',()=>assert.deepEqual(sourceLinkErrors('https://www.youtube.com/watch?v=abc and https://example.com/recipe',['https://www.youtube.com/watch?v=abc','https://example.com/recipe']),[]));
 
 test('upload filenames are not websites, but explicit file-suffix URLs still are',()=>{assert.deepEqual(sourceLinkErrors('Uploaded PDF: recipe.pdf and photo.png',[]),[]);assert.ok(sourceLinkErrors('https://recipe.pdf',[]).length)});
+test('the supplied spiedini recipe contains no website links',async()=>{const fs=await import('node:fs/promises');const text=await fs.readFile(new URL('./fixtures/spiedini.txt',import.meta.url),'utf8');assert.deepEqual(sourceLinkErrors(text,[]),[])});
+test('ChatGPT attribution, fractions, ingredient markers and cooking prose are not links',()=>{assert.deepEqual(sourceLinkErrors('Formatted by ChatGPT. Mix {{i1}} and {{i13}}. Add ⅔ cup panko, ½ tsp garlic powder. Cook at 400°F until 165°F (74°C). Marinate for 30–60 minutes. Prep Time: 15 minutes.',[]),[])});
+test('actual rejected text links identify the offending domain',()=>{assert.match(sourceLinkErrors('Visit https://unrelated.example/promo',[])[0],/unrelated\.example/)});
