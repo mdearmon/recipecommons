@@ -30,6 +30,10 @@ Administrators may edit any entry and recoverably delete it, retaining history/r
 
 Server-side offensive-language and link screening runs on imports and every recipe save, including private drafts. It combines lexical/obfuscation checks with a custom OpenAI structured classifier. Unchecked content is rejected if screening fails. A short-lived cache stores only approved content hashes. Import receipts bind provenance to the importing account and prevent normal save requests from stripping or swapping original attribution; matching content can recover a stripped receipt reference. Recipe text links must match attributed source hostnames, with www aliases normalized; other subdomains are not automatically trusted. Imported original URLs appear at the recipe bottom. Automated moderation is a safeguard, not proof that all offensive meaning is detectable.
 
+## Ingredient portions and reviewed rechecks
+
+The importer counts an ingredient at its first preparation/cooking use, then links later actions to the same portion. Splits and recombination retain quantities and prior-step links. Shopping quantities are grounded in the ingredient-list evidence; a contradiction triggers one correction pass and then plain-language questions. Questions prevent publication while allowing private draft storage. Existing recipes have a Recheck ingredient amounts action: provide the original URL or original text/PDF/photo, compare the proposal, and apply it to the editor before saving an authorized revision. Raw imports are not retained. Older valid recipe records remain compatible.
+
 ## Public source backup
 
 This repository contains the source snapshot of Recipe Commons. Credentials, local runtime state, database contents, uploads, build output, and Sites Git credential history are excluded. Supply OPENAI_API_KEY through ignored local environment files or Sites runtime secrets; never commit its value. The live Site remains https://recipe-commons.mdearmon.chatgpt.site/.
