@@ -34,6 +34,8 @@ Server-side offensive-language and link screening runs on imports and every reci
 
 The importer counts an ingredient at its first preparation/cooking use, then links later actions to the same portion. Splits and recombination retain quantities and prior-step links. Shopping quantities are grounded in the ingredient-list evidence; a contradiction triggers one correction pass and then plain-language questions. Questions prevent publication while allowing private draft storage. Existing recipes have a Recheck ingredient amounts action: provide the original URL or original text/PDF/photo, compare the proposal, and apply it to the editor before saving an authorized revision. Raw imports are not retained. Older valid recipe records remain compatible.
 
+Browser imports and rechecks stream progress while AI extraction runs, avoiding a silent request throughout a long extraction. The terminal response retains sign-in, moderation, and validation errors. A dropped connection keeps the original input available for a deliberate retry. The site header displays the current release version.
+
 ## Public source backup
 
 This repository contains the source snapshot of Recipe Commons. Credentials, local runtime state, database contents, uploads, build output, and Sites Git credential history are excluded. Supply OPENAI_API_KEY through ignored local environment files or Sites runtime secrets; never commit its value. The live Site remains https://recipe-commons.mdearmon.chatgpt.site/.
